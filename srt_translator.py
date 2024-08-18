@@ -26,24 +26,27 @@ if __name__ == "__main__":
     
     parser.add_argument("file", type=str, help="The path to the SRT File")
     parser.add_argument("output", type=str, help="The path to the output file. If the file does not exist, it will be created.")
-    parser.add_argument("--target-language", "-t", type=str, help="The language that the SRT File is going to be translated to. (default: english)", default="english")
-    parser.add_argument("--source-language", "-s", type=str, help="The language that the SRT File is being translated from. (default: auto)", default="auto")
+    parser.add_argument("--target-language", "-t", type=str, help="The language that the SRT File is going to be translated to. (default: english)", default="english", dest="target")
+    parser.add_argument("--source-language", "-s", type=str, help="The language that the SRT File is being translated from. (default: auto)", default="auto", dest="source")
 
     args = parser.parse_args()
 
 srt_file_string = open(args.file, 'r').read()
 subtitles = list(srt.parse(srt_file_string))
 length = len(subtitles)
+print(f'{(0/length):.2f}% completed.')
 
 for i in range(length):
     content = html5lib.parse(subtitles[i].content)  
     parseContent(content, args.source, args.target)
     subtitles[i].content = html5lib.serialize(content)
-    print ('\033[A                             \033[A')
-    print(f'${(i/length):.2f}% completed.')
+    print('\033[A\033[A')
+    print(f'{(i*100/length):.2f}% completed.')
     
-print ('\033[A                             \033[A')
+print('\033[A\033[A')
 print(f'100% completed. Writing...')
 
 with open(args.output, encoding='utf-8', mode='w') as translated:
     translated.write(srt.compose(subtitles))
+
+print('Done.')
