@@ -25,4 +25,4 @@ options:
 
 ## Under the hood
 
-This scripts parses the SRT subtitles using [srt]. The content of the subtitles is then parsed using [html5lib](https://github.com/html5lib/html5lib-python) and separate the text from the SRT tags. After this, the content is translated using [deep_translator](https://github.com/prataffel/deep_translator) with GoogleTranslator option.
+This scripts parses the SRT subtitles using [srt](https://pypi.org/project/srt/) library. The content of the subtitles is then parsed using [html5lib](https://github.com/html5lib/html5lib-python) and separate the text from the SRT tags. After this, the content is translated using [deep_translator](https://github.com/prataffel/deep_translator) with `GoogleTranslator` option.
